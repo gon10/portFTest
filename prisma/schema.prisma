@@ -12,9 +12,20 @@ datasource db {
 }
 
 model Task {
+    id          Int       @id @default(autoincrement())
+    title       String
+    description String?
+    status      String
+    createdAt   DateTime  @default(now())
+    subTasks    SubTask[]
+}
+
+model SubTask {
     id          Int      @id @default(autoincrement())
     title       String
     description String?
     status      String
     createdAt   DateTime @default(now())
+    Task        Task?    @relation(fields: [taskId], references: [id])
+    taskId      Int?
 }
